@@ -22,8 +22,12 @@ RUN mkdir -p /usr/local/lib/lua/5.1/ &&  \
   mkdir -p /usr/lib/lua/5.1/ && \
   cp /root/luazmq/cmake-make/x86_64/lib/zmq.lua /usr/local/lib/lua/5.1/ && \
   cp /root/luazmq/cmake-make/x86_64/lib/luazmq.so /usr/lib/lua/5.1/ && \
+  cp /root/luazmq/cmake-make/x86_64/lib/libzmq.so.4.2.0 /usr/lib/lua/5.1/ && \
   wget -O /usr/local/lib/lua/5.1/rx.lua -x https://raw.githubusercontent.com/bjornbytes/RxLua/master/rx.lua
-
+RUN apt-get install -y chrpath
+WORKDIR /usr/lib/lua/5.1/
+RUN chrpath luazmq.so -r /usr/lib/lua/5.1/ 
+RUN rm -rf /root/luazmq/
 COPY stream_web_server.lua /root/tmp/
 RUN mkdir /root/tmp/utils/
 COPY utils/pstring.lua /root/tmp/utils/ 
