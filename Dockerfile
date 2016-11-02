@@ -21,7 +21,9 @@ RUN apt-get update && \
   cd /usr/lib/lua/5.1/ && chrpath luazmq.so -r /usr/lib/lua/5.1/ && \
   rm -rf /root/luazmq/ && \
   wget -O /usr/local/lib/lua/5.1/rx.lua -x https://raw.githubusercontent.com/bjornbytes/RxLua/master/rx.lua && \
-  mkdir -p /root/tmp/utils/
+  mkdir -p /root/tmp/utils/ && \
+  apt-get -y remove git gcc g++ make cmake liblua5.1-0-dev wget chrpath && apt-get -y autoremove
+
 COPY stream_web_server.lua /root/tmp/
 COPY utils/pstring.lua /root/tmp/utils/ 
 WORKDIR /root/tmp
